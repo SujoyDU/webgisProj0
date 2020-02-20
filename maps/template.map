@@ -1,0 +1,77 @@
+MAP
+  IMAGETYPE      PNG
+  STATUS         ON 
+  EXTENT         913154.843600 120114.582600 1067382.510900 272932.046000
+  IMAGECOLOR     255 255 255  
+  SHAPEPATH      "/tmp"
+  
+  PROJECTION
+    "init=epsg:2263"
+  END
+  
+  OUTPUTFORMAT
+    NAME png
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGB
+    EXTENSION "png"
+  END
+  
+  OUTPUTFORMAT
+    NAME jpeg
+    DRIVER "GD/JPEG"
+    MIMETYPE "image/jpeg"
+    IMAGEMODE RGB
+    EXTENSION "jpg"
+    FORMATOPTION QUALITY=80
+  END
+
+
+  WEB
+    METADATA
+       "wms_srs" 			"EPSG:2263 EPSG:4326"    
+       "wms_formats" 			'png'
+	wms_enable_request 		 "*"
+    END    
+  END
+  
+  # Start of LAYER DEFINITIONS ---------------------------------------------
+  LAYER # NYC community district begins here
+    NAME         nycd
+    DATA         nycd
+    STATUS       ON
+    TYPE         POLYGON
+    DUMP 	 TRUE
+    CLASS
+      NAME       "nycd"
+      STYLE
+        COLOR        232 232 232
+        OUTLINECOLOR 32 32 32
+      END
+    END
+
+  END # NYC community district ends here
+
+  LAYER # NYC Police Precinct begins here
+     NAME         nypp
+     DATA         nypp
+     STATUS       ON
+     TYPE         POLYGON
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=demo password=demo dbname=coursedemo host=134.74.112.18"
+     DATA "geom from (select * from nypp order by precinct) as foo using unique precinct using SRID=2263"	    
+     TEMPLATE	 spwms.html
+     CLASS
+       NAME       "NYC Police Precinct"
+       STYLE
+         COLOR        232 232 232
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+
+ # End of LAYER DEFINITIONS -------------------------------
+
+END # All map files must come to an end just as all other things must come to...
+

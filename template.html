@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <script src="js/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var lon = -73.9;
+        var lat = 40.7;
+        var zoom = 10;
+        var map, l_cd,l_pp;
+        function init(){
+            map = new OpenLayers.Map( 'map' );
+            l_cd = new OpenLayers.Layer.WMS( "NYC Community District",
+                    "mapscripts/template.php?", {layers: 'nycd',format: "image/png"} );
+            map.addLayer(l_cd);
+            l_pp = new OpenLayers.Layer.WMS( "NYC Police Precinct",
+                    "mapscripts/template.php?", {layers: 'nypp',format: "image/png"} );
+            map.addLayer(l_pp);
+            map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+			map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
+            map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerswitcher'),activeColor:'green'}));
+        }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1 id="title">My Proj1</h1>
+    <table><tr>
+    <td><div id="map" style="width:800px; height:600px"></div></td>
+    <td><div id="layerswitcher" style="width:200px; height:600px"></div><td>
+    </tr></table>
+  </body></html>
+
+
+
+
