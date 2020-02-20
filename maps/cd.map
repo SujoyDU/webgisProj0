@@ -3,7 +3,7 @@ MAP
   STATUS         ON 
   EXTENT         913154.843600 120114.582600 1067382.510900 272932.046000
   IMAGECOLOR     255 255 255  
-  SHAPEPATH      "/data"
+  SHAPEPATH      "../data"
   
   PROJECTION
     "init=epsg:2263"
@@ -31,45 +31,32 @@ MAP
     METADATA
        "wms_srs" 			"EPSG:2263 EPSG:4326"    
        "wms_formats" 			'png'
-	wms_enable_request 		 "*"
+	"wms_enable_request" 		 "*"
+    "wms_onlineresource" "http://localhost:4040/mapscripts/cd.php?" 
     END    
   END
   
   # Start of LAYER DEFINITIONS ---------------------------------------------
-  LAYER # NYC community district begins here
-    NAME         nycd
-    DATA         nycd
-    STATUS       ON
-    TYPE         POLYGON
-    DUMP 	 TRUE
-    CLASS
-      NAME       "nycd"
-      STYLE
-        COLOR        232 232 232
-        OUTLINECOLOR 32 32 32
-      END
-    END
-
-  END # NYC community district ends here
-
+ 
   LAYER # NYC Police Precinct begins here
-     NAME         nypp
-     DATA         nypp
+     NAME         cd
+     DATA         cd
      STATUS       ON
      TYPE         POLYGON
      DUMP 	 TRUE
      CONNECTIONTYPE POSTGIS
-     CONNECTION  "user=demo password=demo dbname=coursedemo host=134.74.112.18"
-     DATA "geom from (select * from nypp order by precinct) as foo using unique precinct using SRID=2263"	    
-     TEMPLATE	 spwms.html
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "the_geom from (select * from cd) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
      CLASS
-       NAME       "NYC Police Precinct"
+       NAME       "comdis"
        STYLE
          COLOR        232 232 232
          OUTLINECOLOR 32 32 32
        END
      END
    END # YC Police Precinct layer ends here
+
 
  # End of LAYER DEFINITIONS -------------------------------
 

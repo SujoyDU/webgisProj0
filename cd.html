@@ -5,19 +5,17 @@
         var lon = -73.9;
         var lat = 40.7;
         var zoom = 10;
-        var map, l_cd,l_pp;
+        var map, l_cd
         function init(){
             map = new OpenLayers.Map( 'map' );
             l_cd = new OpenLayers.Layer.WMS( "NYC Community District",
-                    "mapscripts/template.php?", {layers: 'nycd',format: "image/png"} );
+                    "mapscripts/cd.php?", {layers: 'cd',format: "image/png"} );
             
             map.addLayer(l_cd);
-            l_pp = new OpenLayers.Layer.WMS( "NYC Police Precinct",
-                    "mapscripts/template.php?", {layers: 'nypp',format: "image/png"} );
-            map.addLayer(l_pp);
+            
             map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
 			map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
-            map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerswitcher'),activeColor:'green'}));
+            //map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerswitcher'),activeColor:'green'}));
         }
     </script>
   </head>
