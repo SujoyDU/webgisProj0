@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <script src="js/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var lon = 0;
+        var lat = 0;
+        var zoom = 2;
+        var map, l_both;
+        function init(){
+            map = new OpenLayers.Map( 'map' );
+            //change 'zhang' to your login name
+
+            /*
+            http://localhost/~debn20/proj0/world/mapscripts/staticwms.php?
+            LAYERS=world30%2Ccities&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&
+            REQUEST=GetMap&STYLES=&EXCEPTIONS=application%2Fvnd.ogc.se_inimage&
+            SRS=EPSG%3A4326&BBOX=90,0,180,90&WIDTH=256&HEIGHT=256
+
+
+            http://localhost:4040/mapscripts/staticwms.php?
+            LAYERS=world30%2Ccities&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&
+            REQUEST=GetMap&STYLES=&EXCEPTIONS=application%2Fvnd.ogc.se_inimage&
+            SRS=EPSG%3A4326&BBOX=-90,-90,0,0&WIDTH=256&HEIGHT=256
+
+            */
+
+
+
+
+
+
+
+
+
+
+
+
+            l_both = new OpenLayers.Layer.WMS( "overlay",
+                    "./mapscripts/staticwms.php?", {layers: 'world30,cities',format: "image/png"});
+            map.addLayer(l_both);
+            map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+			map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
+            map.addControl( new OpenLayers.Control.LayerSwitcher() );
+        }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1 id="title">MapServer WMS + OpenLayer Example</h1>
+    <div id="map"></div>
+  </body>
+</html>
+
+
+
+

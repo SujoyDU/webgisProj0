@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <script src="js/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var lon = 0;
+        var lat = 0;
+        var zoom = 2;
+        var map, l_both;
+        function init(){
+            map = new OpenLayers.Map( 'map' );
+            //change 'zhang' to your login name
+            l_both = new OpenLayers.Layer.WMS( "overlay",
+                    "/mapscripts/dynamicwms.php?", {layers: 'cities,world30',format: "image/png"});
+            map.addLayer(l_both);
+            map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+			map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
+        }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1 id="title">MapServer WMS + OpenLayer Example with Dyanmic Query Criteria</h1>
+    <h3 id="c1">Grids: have more than 100 cities</h3>
+    <h3 id="c1">Cities: big ones whose population rank is equal or higher than 3</h3>
+
+    <div id="map"></div>
+  </body>
+</html>
+
+
+
+

@@ -1,0 +1,81 @@
+MAP
+  IMAGETYPE      PNG
+  STATUS         ON 
+  EXTENT         -180 -90 180 90
+  SHAPEPATH      "../data"
+  IMAGECOLOR     255 255 255  
+  
+  PROJECTION
+    "init=epsg:4326"
+  END
+  
+  SYMBOL
+      NAME 'circle'
+      TYPE ELLIPSE
+      POINTS 1 1 END
+      FILLED TRUE
+    END
+
+  OUTPUTFORMAT
+    NAME png
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGB
+    EXTENSION "png"
+  END
+  
+  OUTPUTFORMAT
+    NAME jpeg
+    DRIVER "GD/JPEG"
+    MIMETYPE "image/jpeg"
+    IMAGEMODE RGB
+    EXTENSION "jpg"
+    FORMATOPTION QUALITY=80
+  END
+  
+    WEB
+      METADATA
+         "wms_srs" 			"EPSG:4326"    
+         "wms_formats" 			'png'
+         "wms_enable_request"		 "*"
+	 "wms_onlineresource" "http://localhost:4040/mapscripts/staticwms.php?"   
+      END    
+    END
+  
+  
+  # Start of LAYER DEFINITIONS ---------------------------------------------
+  LAYER # Polygon layer begins here
+    NAME         world30
+    DATA         world30
+    STATUS       ON
+    TYPE         POLYGON
+    DUMP 	 TRUE
+    CLASS
+      NAME       "world30"
+      STYLE
+        COLOR        232 232 232
+        OUTLINECOLOR 32 32 32
+      END
+    END  
+  END # States polygon layer ends here
+
+  LAYER # Point layer begins here
+    NAME         cities
+    DATA         cities
+    STATUS       ON
+    TYPE         POINT
+    DUMP 	 TRUE
+    CLASS
+      NAME       "cities"
+      STYLE
+        SYMBOL	     'circle'
+        SIZE	     5	
+        COLOR        255 0 0
+      END
+    END  
+  END # States point layer ends here 
+ 
+ # End of LAYER DEFINITIONS -------------------------------
+
+END # All map files must come to an end just as all other things must come to...
+
