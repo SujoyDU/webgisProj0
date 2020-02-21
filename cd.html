@@ -5,17 +5,22 @@
         var lon = -73.9;
         var lat = 40.7;
         var zoom = 10;
-        var map, l_cd
+        var map, l_cd,l_aoi;
         function init(){
             map = new OpenLayers.Map( 'map' );
             l_cd = new OpenLayers.Layer.WMS( "NYC Community District",
                     "mapscripts/cd.php?", {layers: 'cd',format: "image/png"} );
             
             map.addLayer(l_cd);
+
+            l_aoi = new OpenLayers.Layer.WMS( "NYC Area of interest",
+                    "mapscripts/aoi.php?", {layers: 'aoi',format: "image/png"} );
+            
+            map.addLayer(l_aoi);
             
             map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
-			map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
-            //map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerswitcher'),activeColor:'green'}));
+			      map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
+            map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerswitcher'),activeColor:'green'}));
         }
     </script>
   </head>
