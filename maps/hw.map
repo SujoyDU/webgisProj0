@@ -74,13 +74,13 @@ MAP
      DUMP 	 TRUE
      CONNECTIONTYPE POSTGIS
      CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
-     DATA "the_geom from (select georte from hw) as foo using unique gid using SRID=2263"	    
+     DATA "the_geom from (select * from hw) as foo using unique gid using SRID=2263"	    
      #TEMPLATE	 spwms.html
      CLASS
        NAME       "hw"
        STYLE
-         COLOR        232 0 0
-         WIDTH        2
+         COLOR        60 140 90
+         WIDTH        4
          
        END
      END
