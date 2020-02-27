@@ -86,6 +86,26 @@ MAP
      END
    END # YC Police Precinct layer ends here
 
+   LAYER # NYC Police Precinct begins here
+     NAME         buf
+     DATA         buf
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "geom from (select gid,st_buffer(the_geom,5000)as geom from hw) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "buff"
+      STYLE
+            COLOR        232 232 232
+            OUTLINECOLOR 32 32 32
+        END
+     END
+   END # YC Police Precinct layer ends here
+
 
  # End of LAYER DEFINITIONS -------------------------------
 
