@@ -17,6 +17,13 @@
                     "mapscripts/aoi.php?", {layers: 'aoi',format: "image/png"} );
             
             map.addLayer(l_aoi);
+
+
+            l_aoi_conv = new OpenLayers.Layer.WMS( "NYC ConvexHull AOI",
+                    "mapscripts/aoi.php?", {layers: 'aoi,conv',format: "image/png"} );
+            
+            map.addLayer(l_aoi_conv);
+            
             
             l_hw = new OpenLayers.Layer.WMS( "NYC Highway",
                     "mapscripts/hw.php?", {layers: 'hw',format: "image/png"} );

@@ -65,6 +65,25 @@ MAP
      END
    END # YC Police Precinct layer ends here
 
+    LAYER # NYC Police Precinct begins here
+        NAME         conv
+        DATA         conv
+        STATUS       ON
+        TYPE         POLYGON
+        TRANSPARENCY 50
+        DUMP 	 TRUE
+        CONNECTIONTYPE POSTGIS
+        CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+        DATA "geom from (select * from aoi_conv) as foo using unique gid using SRID=2263"	    
+        #TEMPLATE	 spwms.html
+        CLASS
+          NAME       "conv"
+          STYLE
+            COLOR        232 232 232
+            OUTLINECOLOR 32 32 32
+          END
+        END
+      END # YC Police Precinct layer ends here
 
  # End of LAYER DEFINITIONS -------------------------------
 

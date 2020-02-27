@@ -46,7 +46,7 @@ MAP
      DUMP 	 TRUE
      CONNECTIONTYPE POSTGIS
      CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
-     DATA "the_geom from (select * from cd) as foo using unique gid using SRID=2263"	    
+     DATA "the_geom from (select * from cd where borocd between 400 and 500) as foo using unique gid using SRID=2263"	    
      #TEMPLATE	 spwms.html
      CLASS
        NAME       "comdis"
