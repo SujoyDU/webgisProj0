@@ -56,6 +56,18 @@ $new_layer->set("connection","user=postgres password=system dbname=nyc host=loca
 $data="the_geom from (select * from hw) as foo using unique gid using SRID=2263";
 $new_layer->set("data",$data) ; 
 
+$new_layer =ms_newlayerobj($oMap);
+$new_layer->set("type", MS_LAYER_POLYGON);
+$new_layer->set("dump", 1);
+$new_layer->set("status", 1);
+$new_layer->set("name","dynamicBuffer");
+$new_class = ms_newClassObj($new_layer);
+$new_style = ms_newStyleObj($new_class);
+$new_style-> outlinecolor->setRGB(130, 120, 200);
+$new_layer->setConnectionType(MS_POSTGIS);
+$new_layer->set("connection","user=postgres password=system dbname=nyc host=localhost");
+$data="geom from (select gid,st_buffer(the_geom,5000)as geom from hw) as foo using unique gid using SRID=2263";
+$new_layer->set("data",$data) ;
 
 
 $oMap->owsdispatch($request);
