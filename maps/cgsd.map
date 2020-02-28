@@ -1,0 +1,203 @@
+MAP
+  IMAGETYPE      PNG
+  STATUS         ON 
+  EXTENT         913154.843600 120114.582600 1067382.510900 272932.046000
+  IMAGECOLOR     255 255 255  
+  SHAPEPATH      "../data"
+  
+  PROJECTION
+    "init=epsg:2263"
+  END
+  
+  OUTPUTFORMAT
+    NAME png
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGB
+    EXTENSION "png"
+  END
+  
+  OUTPUTFORMAT
+    NAME jpeg
+    DRIVER "GD/JPEG"
+    MIMETYPE "image/jpeg"
+    IMAGEMODE RGB
+    EXTENSION "jpg"
+    FORMATOPTION QUALITY=80
+  END
+
+
+  WEB
+    METADATA
+       "wms_srs" 			"EPSG:2263 EPSG:4326"    
+       "wms_formats" 			'png'
+	"wms_enable_request" 		 "*"
+    "wms_onlineresource" "http://localhost:4040/mapscripts/cgsd.php?" 
+    END    
+  END
+  
+  # Start of LAYER DEFINITIONS ---------------------------------------------
+ 
+  LAYER # NYC Police Precinct begins here
+     NAME         cg
+     DATA         cg
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "the_geom from (select * from cg) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "cg"
+       STYLE
+         COLOR        100 232 100
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+
+   LAYER # NYC Police Precinct begins here
+     NAME         sd
+     DATA         sd
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "the_geom from (select * from sd) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "sd"
+       STYLE
+         COLOR        140 140 232
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+
+   LAYER # NYC Police Precinct begins here
+     NAME         intersect
+     DATA         intersect
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "geom from (
+            with t1 as(select cg.the_geom from cg,aoi where aoi.id=79 and st_intersects(cg.the_geom,aoi.the_geom)),
+            t2 as(select sd.the_geom from sd,aoi where aoi.id=79 and st_intersects(sd.the_geom,aoi.the_geom))
+            select 1 as gid,st_intersection(t1.the_geom,t2.the_geom) as geom from t1,t2
+     ) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "intersect"
+       STYLE
+         COLOR        232 100 100
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+ # End of LAYER DEFINITIONS -------------------------------
+    
+   LAYER # NYC Police Precinct begins here
+     NAME         uni
+     DATA         uni
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "geom from (
+            with t1 as(select cg.the_geom from cg,aoi where aoi.id=79 and st_intersects(cg.the_geom,aoi.the_geom)),
+            t2 as(select sd.the_geom from sd,aoi where aoi.id=79 and st_intersects(sd.the_geom,aoi.the_geom))
+            select 1 as gid,st_union(t1.the_geom,t2.the_geom) as geom from t1,t2
+     ) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "intersect"
+       STYLE
+         COLOR        232 100 100
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+
+   LAYER # NYC Police Precinct begins here
+     NAME         ab
+     DATA         ab
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "geom from (
+            with t1 as(select cg.the_geom from cg,aoi where aoi.id=79 and st_intersects(cg.the_geom,aoi.the_geom)),
+            t2 as(select sd.the_geom from sd,aoi where aoi.id=79 and st_intersects(sd.the_geom,aoi.the_geom))
+            select 1 as gid,st_difference(t1.the_geom,t2.the_geom) as geom from t1,t2
+     ) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "ab"
+       STYLE
+         COLOR        232 100 100
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+   
+   LAYER # NYC Police Precinct begins here
+     NAME         ba
+     DATA         ba
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "geom from (
+            with t1 as(select cg.the_geom from cg,aoi where aoi.id=79 and st_intersects(cg.the_geom,aoi.the_geom)),
+            t2 as(select sd.the_geom from sd,aoi where aoi.id=79 and st_intersects(sd.the_geom,aoi.the_geom))
+            select 1 as gid,st_difference(t2.the_geom,t1.the_geom) as geom from t1,t2
+     ) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "ab"
+       STYLE
+         COLOR        232 100 100
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+
+   LAYER # NYC Police Precinct begins here
+     NAME         symD
+     DATA         symD
+     STATUS       ON
+     TYPE         POLYGON
+     TRANSPARENCY 50
+     DUMP 	 TRUE
+     CONNECTIONTYPE POSTGIS
+     CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
+     DATA "geom from (
+            with t1 as(select cg.the_geom from cg,aoi where aoi.id=79 and st_intersects(cg.the_geom,aoi.the_geom)),
+            t2 as(select sd.the_geom from sd,aoi where aoi.id=79 and st_intersects(sd.the_geom,aoi.the_geom))
+            select 1 as gid,st_symDifference(t1.the_geom,t2.the_geom) as geom from t1,t2
+     ) as foo using unique gid using SRID=2263"	    
+     #TEMPLATE	 spwms.html
+     CLASS
+       NAME       "ab"
+       STYLE
+         COLOR        232 100 100
+         OUTLINECOLOR 32 32 32
+       END
+     END
+   END # YC Police Precinct layer ends here
+ # End of LAYER DEFINITIONS -------------------------
+END # All map files must come to an end just as all other things must come to...
+

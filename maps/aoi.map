@@ -74,7 +74,7 @@ MAP
         DUMP 	 TRUE
         CONNECTIONTYPE POSTGIS
         CONNECTION  "user=postgres password=system dbname=nyc host=localhost"
-        DATA "geom from (select * from aoi_conv) as foo using unique gid using SRID=2263"	    
+        DATA "geom from (select 1 as gid, st_convexhull(st_collect(the_geom)) as geom from aoi) as foo using unique gid using SRID=2263"	    
         #TEMPLATE	 spwms.html
         CLASS
           NAME       "conv"

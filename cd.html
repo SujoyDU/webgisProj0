@@ -5,7 +5,7 @@
         var lon = -73.9;
         var lat = 40.7;
         var zoom = 10;
-        var map, l_cd,l_aoi, l_hw;
+        var map, l_cd,l_aoi, l_hw, l_cgsd_intersect,l_cgsd_union,l_cgsd_ab,l_cgsd_ba,l_cgsd_symD;
         function init(){
             map = new OpenLayers.Map( 'map' );
             l_cd = new OpenLayers.Layer.WMS( "NYC Community District",
@@ -29,6 +29,31 @@
                     "mapscripts/hw.php?", {layers: 'georte,buf',format: "image/png"} );
             
             map.addLayer(l_hw);
+
+            l_cgsd_intersect = new OpenLayers.Layer.WMS("School and Congressional District intersection",
+                                "mapscripts/cgsd.php?", {layers: 'cg,sd,intersect', format: "image/png"} );
+        
+            map.addLayer(l_cgsd_intersect);
+
+            l_cgsd_union = new OpenLayers.Layer.WMS("School and Congressional District Union",
+                                "mapscripts/cgsd.php?", {layers: 'cg,sd,uni', format: "image/png"} );
+        
+            map.addLayer(l_cgsd_union);
+
+            l_cgsd_ab = new OpenLayers.Layer.WMS("School and Congressional District A-B",
+                                "mapscripts/cgsd.php?", {layers: 'cg,sd,ab', format: "image/png"} );
+        
+            map.addLayer(l_cgsd_ab);
+
+            l_cgsd_ba = new OpenLayers.Layer.WMS("School and Congressional District B-A",
+                                "mapscripts/cgsd.php?", {layers: 'cg,sd,ba', format: "image/png"} );
+        
+            map.addLayer(l_cgsd_ba);
+
+            l_cgsd_symD = new OpenLayers.Layer.WMS("School and Congressional District SymDifference",
+                                "mapscripts/cgsd.php?", {layers: 'cg,sd,symD', format: "image/png"} );
+        
+            map.addLayer(l_cgsd_symD);
             
             map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
 			      map.addControl(new OpenLayers.Control.MousePosition({position: new OpenLayers.Pixel(100,0)}));
